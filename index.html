@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngCivil Pro - Exercícios Resolvidos de Engenharia Civil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #700F3A;
+            --primary-dark: #4a0a27;
+            --primary-light: #8f1348;
+            --accent-color: #f39c12;
+            --bg-light: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --success: #27ae60;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: -3rem auto 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-box button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: var(--bg-light);
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Matérias Grid */
+        .materias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .materia-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .materia-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(112, 15, 58, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .materia-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .materia-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .materia-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .exercicios-count {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Exercícios List */
+        .exercicios-list {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .exercicios-list.active {
+            display: block;
+        }
+
+        .exercicio-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .exercicio-item:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .exercicio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .exercicio-titulo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .dificuldade {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .facil { background: #d4edda; color: #155724; }
+        .medio { background: #fff3cd; color: #856404; }
+        .dificil { background: #f8d7da; color: #721c24; }
+
+        .exercicio-preview {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Question Detail Page */
+        .question-detail {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .question-detail.active {
+            display: block;
+        }
+
+        .back-button {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .question-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .question-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .solution-section {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--success);
+        }
+
+        .solution-title {
+            color: var(--success);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .solution-content {
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .solution-step {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .solution-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-radius: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .materias-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-detail {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">📐 EngCivil Pro</div>
+            <ul class="nav-links">
+                <li><a href="#materias">Matérias</a></li>
+                <li><a href="#exercicios">Exercícios</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Domine a Engenharia Civil com Exercícios Resolvidos</h1>
+            <p>Mais de 500+ exercícios detalhadamente resolvidos para você se preparar para provas e concursos</p>
+            <button class="cta-button" onclick="document.getElementById('materias').scrollIntoView({behavior: 'smooth'})">Começar Agora</button>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <div class="container">
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar exercícios por palavra-chave...">
+                <button onclick="searchExercicios()">🔍 Buscar</button>
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterByDifficulty('todos')">Todos</button>
+                <button class="filter-btn" onclick="filterByDifficulty('facil')">Fácil</button>
+                <button class="filter-btn" onclick="filterByDifficulty('medio')">Médio</button>
+                <button class="filter-btn" onclick="filterByDifficulty('dificil')">Difícil</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matérias Section -->
+    <div class="container" id="materias">
+        <h2 class="section-title">Matérias Disponíveis</h2>
+        <div class="materias-grid" id="materiasGrid">
+            <!-- As matérias serão carregadas aqui via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Exercícios List -->
+    <div class="container" id="exercicios">
+        <div class="exercicios-list" id="exerciciosList">
+            <!-- Os exercícios serão carregados aqui via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Question Detail -->
+    <div class="container">
+        <div class="question-detail" id="questionDetail">
+            <!-- O detalhe da questão será carregado aqui via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="container">
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Exercícios Resolvidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Matérias</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10k+</div>
+                    <div class="stat-label">Estudantes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Taxa de Aprovação</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 EngCivil Pro - Exercícios Resolvidos de Engenharia Civil. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Database de matérias e exercícios
+        const materias = [
+            {
+                id: 1,
+                nome: 'Resistência dos Materiais',
+                icon: '🏗️',
+                descricao: 'Estudo das tensões e deformações em estruturas',
+                exercicios: 85
+            },
+            {
+                id: 2,
+                nome: 'Estruturas de Concreto',
+                icon: '🧱',
+                descricao: 'Dimensionamento e análise de estruturas de concreto armado',
+                exercicios: 72
+            },
+            {
+                id: 3,
+                nome: 'Estruturas Metálicas',
+                icon: '⚙️',
+                descricao: 'Projeto e cálculo de estruturas de aço',
+                exercicios: 54
+            },
+            {
+                id: 4,
+                nome: 'Mecânica dos Solos',
+                icon: '🌍',
+                descricao: 'Análise das propriedades e comportamento dos solos',
+                exercicios: 68
+            },
+            {
+                id: 5,
+                nome: 'Hidráulica',
+                icon: '💧',
+                descricao: 'Estudo do movimento dos fluidos e suas aplicações',
+                exercicios: 61
+            },
+            {
+                id: 6,
+                nome: 'Análise Estrutural',
+                icon: '📊',
+                descricao: 'Métodos de análise de esforços em estruturas',
+                exercicios: 78
+            }
+        ];
+
+        const exercicios = {
+            1: [ // Resistência dos Materiais
+                {
+                    id: 101,
+                    titulo: 'Tensão Normal em Barra Tracionada',
+                    preview: 'Uma barra de aço com seção transversal de 400 mm² é submetida a uma força de tração...',
+                    dificuldade: 'facil',
+                    enunciado: 'Uma barra de aço com seção transversal de 400 mm² é submetida a uma força de tração de 80 kN. Calcule a tensão normal atuante na barra e verifique se ela está dentro do limite de segurança, sabendo que a tensão admissível do aço é de 250 MPa.',
+                    solucao: [
+                        {
+                            texto: 'Identificar os dados do problema:',
+                            detalhes: 'Área da seção transversal (A) = 400 mm²<br>Força de tração (F) = 80 kN = 80.000 N<br>Tensão admissível (σadm) = 250 MPa'
+                        },
+                        {
+                            texto: 'Aplicar a fórmula da tensão normal:',
+                            detalhes: 'σ = F / A<br>σ = 80.000 N / 400 mm²<br>σ = 200 N/mm² = 200 MPa'
+                        },
+                        {
+                            texto: 'Verificar a segurança:',
+                            detalhes: 'Como σ = 200 MPa < σadm = 250 MPa, a barra está dentro do limite de segurança.<br><br><strong>Resposta:</strong> A tensão normal atuante é de 200 MPa e a barra está segura.'
+                        }
+                    ]
+                },
+                {
+                    id: 102,
+                    titulo: 'Deformação em Barra de Concreto',
+                    preview: 'Um pilar de concreto com 3 metros de altura e módulo de elasticidade de 25 GPa...',
+                    dificuldade: 'medio',
+                    enunciado: 'Um pilar de concreto com 3 metros de altura e módulo de elasticidade de 25 GPa é comprimido por uma carga que gera uma tensão de 8 MPa. Determine o encurtamento total do pilar.',
+                    solucao: [
+                        {
+                            texto: 'Dados fornecidos:',
+                            detalhes: 'Altura do pilar (L) = 3 m = 3000 mm<br>Módulo de elasticidade (E) = 25 GPa = 25.000 MPa<br>Tensão de compressão (σ) = 8 MPa'
+                        },
+                        {
+                            texto: 'Calcular a deformação específica:',
+                            detalhes: 'ε = σ / E<br>ε = 8 MPa / 25.000 MPa<br>ε = 0,00032 (ou 0,032%)'
+                        },
+                        {
+                            texto: 'Calcular o encurtamento total:',
+                            detalhes: 'ΔL = ε × L<br>ΔL = 0,00032 × 3000 mm<br>ΔL = 0,96 mm<br><br><strong>Resposta:</strong> O pilar sofrerá um encurtamento de 0,96 mm.'
+                        }
+                    ]
+                },
+                {
+                    id: 103,
+                    titulo: 'Cisalhamento em Pino Duplo',
+                    preview: 'Um pino de aço com 20 mm de diâmetro conecta duas chapas e está sujeito a cisalhamento duplo...',
+                    dificuldade: 'medio',
+                    enunciado: 'Um pino de aço com 20 mm de diâmetro conecta duas chapas e está sujeito a cisalhamento duplo por uma força de 50 kN. Sabendo que a tensão de cisalhamento admissível é de 100 MPa, verifique se o pino é adequado.',
+                    solucao: [
+                        {
+                            texto: 'Calcular a área de cisalhamento:',
+                            detalhes: 'Diâmetro (d) = 20 mm<br>Área de uma seção (A) = π × d² / 4<br>A = π × 20² / 4 = 314,16 mm²<br>Como é cisalhamento duplo: A_total = 2 × 314,16 = 628,32 mm²'
+                        },
+                        {
+                            texto: 'Calcular a tensão de cisalhamento atuante:',
+                            detalhes: 'τ = F / A_total<br>τ = 50.000 N / 628,32 mm²<br>τ = 79,6 MPa'
+                        },
+                        {
+                            texto: 'Verificação:',
+                            detalhes: 'Como τ = 79,6 MPa < τadm = 100 MPa, o pino é adequado.<br><br><strong>Resposta:</strong> O pino suporta com segurança a carga aplicada.'
+                        }
+                    ]
+                }
+            ],
+            2: [ // Estruturas de Concreto
+                {
+                    id: 201,
+                    titulo: 'Dimensionamento de Viga à Flexão',
+                    preview: 'Dimensionar uma viga simplesmente apoiada de concreto armado com vão de 5 metros...',
+                    dificuldade: 'dificil',
+                    enunciado: 'Dimensionar uma viga simplesmente apoiada de concreto armado com vão de 5 metros, submetida a uma carga uniformemente distribuída de 20 kN/m (incluindo peso próprio). Dados: fck = 30 MPa, fyk = 500 MPa, bw = 20 cm.',
+                    solucao: [
+                        {
+                            texto: 'Calcular o momento fletor máximo:',
+                            detalhes: 'Para viga simplesmente apoiada com carga uniformemente distribuída:<br>M_max = q × L² / 8<br>M_max = 20 × 5² / 8<br>M_max = 62,5 kN.m'
+                        },
+                        {
+                            texto: 'Calcular o momento fletor de cálculo:',
+                            detalhes: 'M_d = γf × M_max<br>M_d = 1,4 × 62,5 = 87,5 kN.m'
+                        },
+                        {
+                            texto: 'Determinar a altura útil necessária:',
+                            detalhes: 'Usando K_c = 0,8 × b_w × d² × f_cd<br>Assumindo armadura simples: d = √(M_d / (0,295 × b_w × f_cd))<br>f_cd = 30/1,4 = 21,4 MPa<br>d = √(8750000 / (0,295 × 200 × 21,4))<br>d ≈ 36,8 cm<br><br>Adotando d = 40 cm e cobrimento de 3 cm:<br>h = 43 cm<br><br><strong>Resposta:</strong> Viga com seção 20 x 45 cm (altura arredondada).'
+                        }
+                    ]
+                },
+                {
+                    id: 202,
+                    titulo: 'Cisalhamento em Viga',
+                    preview: 'Verificar a necessidade de armadura transversal em uma viga com cortante de 80 kN...',
+                    dificuldade: 'medio',
+                    enunciado: 'Uma viga de concreto (fck = 25 MPa) com seção 20x50 cm e d = 45 cm está submetida a uma força cortante de projeto de 80 kN. Verificar se é necessária armadura transversal.',
+                    solucao: [
+                        {
+                            texto: 'Calcular a tensão de cisalhamento:',
+                            detalhes: 'τ_wd = V_d / (b_w × d)<br>τ_wd = 80.000 / (200 × 450)<br>τ_wd = 0,89 MPa'
+                        },
+                        {
+                            texto: 'Determinar a resistência do concreto ao cisalhamento:',
+                            detalhes: 'τ_Rd1 = 0,25 × f_ctd<br>f_ctd = 0,15 × f_ck^(2/3) / 1,4<br>f_ctd = 0,15 × 25^(2/3) / 1,4 ≈ 0,96 MPa<br>τ_Rd1 = 0,25 × 0,96 = 0,24 MPa'
+                        },
+                        {
+                            texto: 'Conclusão:',
+                            detalhes: 'Como τ_wd = 0,89 MPa > τ_Rd1 = 0,24 MPa, é necessária armadura transversal (estribos).<br><br><strong>Resposta:</strong> Sim, a viga necessita de armadura transversal.'
+                        }
+                    ]
+                }
+            ],
+            4: [ // Mecânica dos Solos
+                {
+                    id: 401,
+                    titulo: 'Índice de Vazios e Porosidade',
+                    preview: 'Um solo possui massa específica seca de 1,6 g/cm³ e densidade relativa dos grãos de 2,65...',
+                    dificuldade: 'facil',
+                    enunciado: 'Um solo possui massa específica seca de 1,6 g/cm³ e densidade relativa dos grãos de 2,65. Calcule o índice de vazios e a porosidade do solo.',
+                    solucao: [
+                        {
+                            texto: 'Dados do problema:',
+                            detalhes: 'ρ_d = 1,6 g/cm³<br>G_s = 2,65<br>ρ_w = 1,0 g/cm³ (água)'
+                        },
+                        {
+                            texto: 'Calcular o índice de vazios:',
+                            detalhes: 'e = (G_s × ρ_w / ρ_d) - 1<br>e = (2,65 × 1,0 / 1,6) - 1<br>e = 1,656 - 1<br>e = 0,656'
+                        },
+                        {
+                            texto: 'Calcular a porosidade:',
+                            detalhes: 'n = e / (1 + e)<br>n = 0,656 / (1 + 0,656)<br>n = 0,656 / 1,656<br>n = 0,396 ou 39,6%<br><br><strong>Resposta:</strong> Índice de vazios = 0,656 e porosidade = 39,6%.'
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let currentMateria = null;
+        let currentDifficulty = 'todos';
+
+        // Carregar matérias
+        function loadMaterias() {
+            const grid = document.getElementById('materiasGrid');
+            grid.innerHTML = '';
+            
+            materias.forEach(materia => {
+                const card = document.createElement('div');
+                card.className = 'materia-card';
+                card.onclick = () => showExercicios(materia.id);
+                card.innerHTML = `
+                    <div class="materia-icon">${materia.icon}</div>
+                    <h3>${materia.nome}</h3>
+                    <p>${materia.descricao}</p>
+                    <span class="exercicios-count">${materia.exercicios} exercícios disponíveis</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Mostrar exercícios de uma matéria
+        function showExercicios(materiaId) {
+            currentMateria = materiaId;
+            const lista = document.getElementById('exerciciosList');
+            const questionDetail = document.getElementById('questionDetail');
+            
+            questionDetail.classList.remove('active');
+            lista.innerHTML = '';
+            
+            const materia = materias.find(m => m.id === materiaId);
+            const exs = exercicios[materiaId] || [];
+            
+            if (exs.length === 0) {
+                lista.innerHTML = '<p style="text-align: center; color: #7f8c8d;">Em breve novos exercícios!</p>';
+            } else {
+                const titulo = document.createElement('h2');
+                titulo.className = 'section-title';
+                titulo.textContent = materia.nome;
+                lista.appendChild(titulo);
+                
+                exs.forEach(ex => {
+                    if (currentDifficulty === 'todos' || ex.dificuldade === currentDifficulty) {
+                        const item = document.createElement('div');
+                        item.className = 'exercicio-item';
+                        item.onclick = () => showQuestionDetail(materiaId, ex.id);
+                        item.innerHTML = `
+                            <div class="exercicio-header">
+                                <span class="exercicio-titulo">${ex.titulo}</span>
+                                <span class="dificuldade ${ex.dificuldade}">${ex.dificuldade.charAt(0).toUpperCase() + ex.dificuldade.slice(1)}</span>
+                            </div>
+                            <p class="exercicio-preview">${ex.preview}</p>
+                        `;
+                        lista.appendChild(item);
+                    }
+                });
+            }
+            
+            lista.classList.add('active');
+            lista.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Mostrar detalhes da questão
+        function showQuestionDetail(materiaId, exercicioId) {
+            const exs = exercicios[materiaId] || [];
+            const exercicio = exs.find(e => e.id === exercicioId);
+            
+            if (!exercicio) return;
+            
+            const detail = document.getElementById('questionDetail');
+            const lista = document.getElementById('exerciciosList');
+            
+            lista.classList.remove('active');
+            
+            let solucoesHTML = '';
+            exercicio.solucao.forEach((step, index) => {
+                solucoesHTML += `
+                    <div class="solution-step">
+                        <p><span class="step-number">${index + 1}</span><strong>${step.texto}</strong></p>
+                        <p>${step.detalhes}</p>
+                    </div>
+                `;
+            });
+            
+            detail.innerHTML = `
+                <button class="back-button" onclick="backToList()">← Voltar para lista</button>
+                <h2 class="question-title">${exercicio.titulo}</h2>
+                <div class="question-content">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">📝 Enunciado</h3>
+                    <p>${exercicio.enunciado}</p>
+                </div>
+                <div class="solution-section">
+                    <h3 class="solution-title">✅ Resolução Completa</h3>
+                    <div class="solution-content">
+                        ${solucoesHTML}
+                    </div>
+                </div>
+            `;
+            
+            detail.classList.add('active');
+            detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Voltar para lista
+        function backToList() {
+            const detail = document.getElementById('questionDetail');
+            const lista = document.getElementById('exerciciosList');
+            
+            detail.classList.remove('active');
+            lista.classList.add('active');
+            lista.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Filtrar por dificuldade
+        function filterByDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            
+            // Atualizar botões
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Recarregar exercícios se houver matéria selecionada
+            if (currentMateria) {
+                showExercicios(currentMateria);
+            }
+        }
+
+        // Buscar exercícios
+        function searchExercicios() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (!searchTerm) return;
+            
+            const lista = document.getElementById('exerciciosList');
+            const questionDetail = document.getElementById('questionDetail');
+            questionDetail.classList.remove('active');
+            lista.innerHTML = '';
+            
+            const titulo = document.createElement('h2');
+            titulo.className = 'section-title';
+            titulo.textContent = 'Resultados da Busca';
+            lista.appendChild(titulo);
+            
+            let found = false;
+            Object.keys(exercicios).forEach(materiaId => {
+                exercicios[materiaId].forEach(ex => {
+                    if (ex.titulo.toLowerCase().includes(searchTerm) || 
+                        ex.preview.toLowerCase().includes(searchTerm) ||
+                        ex.enunciado.toLowerCase().includes(searchTerm)) {
+                        found = true;
+                        const item = document.createElement('div');
+                        item.className = 'exercicio-item';
+                        item.onclick = () => showQuestionDetail(parseInt(materiaId), ex.id);
+                        item.innerHTML = `
+                            <div class="exercicio-header">
+                                <span class="exercicio-titulo">${ex.titulo}</span>
+                                <span class="dificuldade ${ex.dificuldade}">${ex.dificuldade.charAt(0).toUpperCase() + ex.dificuldade.slice(1)}</span>
+                            </div>
+                            <p class="exercicio-preview">${ex.preview}</p>
+                        `;
+                        lista.appendChild(item);
+                    }
+                });
+            });
+            
+            if (!found) {
+                lista.innerHTML += '<p style="text-align: center; color: #7f8c8d;">Nenhum resultado encontrado.</p>';
+            }
+            
+            lista.classList.add('active');
+            lista.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Buscar ao pressionar Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchExercicios();
+            }
+        });
+
+        // Inicializar
+        loadMaterias();
+    </script>
+</body>
+</html>
